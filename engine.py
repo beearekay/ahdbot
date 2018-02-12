@@ -15,7 +15,8 @@ edpifaq_response_dict = {
 }
 
 entitlements_info_response_dict = {
-    "entitlements_intro": "EDPI Needs two types of entitlements. One is for accessing the EDPI UI to onboard and build queries. Another type is to access the data using the built stored queries"
+    "entitlements_intro": "EDPI Needs two types of entitlements. One is for accessing the EDPI UI to onboard and build queries. Another type is to access the data using the built stored queries",
+    "me@edpi": "One Needs EDPI Consumer entitlements to onboard and build queries."
 }
 
 edpi_query_value_dict = {
@@ -34,13 +35,15 @@ def edpi_faq(entities):
     return "Sorry.." + edpifaq_response_dict["faq_link"]
 
 def entitlements_info(entities):
+    print("----------")
+    print(entities)
     if len(entities) == 0:
         return entitlements_info_response_dict["entitlements_intro"]
     for ent in entities:
         qtype = ent["type"]
         qval = ent["entity"]
-        if qtype == "edpi-query-value":
-            return edpi_query_value_dict[qval]
-
-        return edpi_query_value_dict[entities[0]]
+        print(qtype)
+        print(qval)
+        if qtype == "edpi_ui":
+            return entitlements_info_response_dict[qval]
     return "Sorry.." + edpifaq_response_dict["faq_link"]
