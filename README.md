@@ -1,31 +1,34 @@
-# Chatbot
+# GST FAQ Bot with Rasa-NLU
+Set of scripts to build a chatbot which will answer FAQ about Goods and Services Tax (GST) India.
+Copyright (C) 2017 Yogesh H Kulkarni
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3.
+## License:
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or any later version.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Scripts:
+* app.py: Chatbot UI built using Flask, using templates/*.html
+* engine.py: Chatbot core logic as well as knowledgebase.
+* config.json: Rasa NLU settings for training as well as executing intent extraction
+* run_training: Windows batch file to build trained modeling
+* run_server: Windows batch file to execute Rasa-NLU server.
 
-## Code scaffolding
+## Dependencies:
+* Needs Python 3.5
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+## ToDos
+* Add more training data
+* Entity extraction not working as desired, find out more.
+* Etc.
 
-## Build
+## References
+* Rasa-NLU [installation](https://github.com/RasaHQ/rasa_nlu)
+* Bhavani Ravi’s event-bot [code](https://github.com/bhavaniravi/rasa-site-bot), Youtube [Video](https://www.youtube.com/watch?v=ojuq0vBIA-g)
+* GST FAQs:
+    * Government [Documentation](http://www.cbec.gov.in/resources//htdocs-cbec/deptt_offcr/faq-on-gst.pdf)
+    * GST India [Documentation](http://www.gstindia.com/frequently-asked-questions-faqs-on-goods-and-services-tax-gst/)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Deploying to GitHub Pages
-
-Run `ng github-pages:deploy` to deploy to GitHub Pages.
-
-## Further help
-
-To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Disclaimer:
+* Author (yogeshkulkarni@yahoo.com) gives no guarantee of the results of the program. It is just a fun script. Lot of improvements are still to be made. So, don’t depend on it at all.
