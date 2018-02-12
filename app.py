@@ -47,6 +47,7 @@ def chat():
         if intent == "edpi_faq":
             response_text = edpi_faq(entities)
         elif intent == "entitlements_info":
+            print('OK inside entitlements_info')
             response_text = entitlements_info(entities)
         elif intent == "intro":
             response_text = get_random_response(intent)
