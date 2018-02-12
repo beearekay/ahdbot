@@ -11,7 +11,8 @@ edpifaq_response_dict = {
     #"edpi_intro": "EDPI is an Enterprise Data Platform Interface. Once onboarded consumers can access AM/WM Data from predefined Data towers. Choose from below two options <br/><br/><html><body><form action=\"http://localhost:5000\" method=\"POST\"><div class=\"btn btn-info btn-lg\">AM EDPI</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class=\"btn btn-info btn-lg\">WM EDPI</div></form></body></html>",
     "edpi_intro": "EDPI is an Enterprise Data Platform Interface. Once onboarded consumers can access AM/WM Data from predefined Data towers. Choose one from below <br/><br/><html><body><form action=\"http://127.0.0.1:8080/result\" method=\"POST\"><input type=\"submit\" name=\"submit\" class=\"btn btn-info btn-lg active\" value=\"AM EDPI\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"submit\" class=\"btn btn-info btn-lg active\" value=\"WM EDPI\"> </form></body></html>",
     "benefits":"EDPI is a data distribution layer for AWM which acts as golden source",
-    "faq_link":'You can check all the answers here AM EDPI: <a href=\"go/edpi\"</a>, WM EDPI:\"<a href=\"go/edpiwm\"</a>'
+    "faq_link":'You can check all the answers here AM EDPI: <a href=\"go/edpi\"</a>, WM EDPI:\"<a href=\"go/edpiwm\"</a>',
+    "reference":"You want EDPI reference data ... visit Data model browser"
 }
 
 entitlements_info_response_dict = {
@@ -28,10 +29,19 @@ def general_response(intent):
     return intent_response_dict[intent]
 
 def edpi_faq(entities):
+    print("----------")
+    print(entities)
     if len(entities) == 0:
         return edpifaq_response_dict["edpi_intro"]
     if len(entities) == 1:
-        return edpifaq_response_dict[entities[0]]
+        #return edpifaq_response_dict[entities[0]]
+        for ent in entities:
+            qtype = ent["type"]
+            qval = ent["entity"]
+            print(qtype)
+            print(qval)
+        if qtype == "tower":
+            return edpifaq_response_dict[qval]
     return "Sorry.." + edpifaq_response_dict["faq_link"]
 
 def entitlements_info(entities):
