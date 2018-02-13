@@ -1,10 +1,8 @@
-# Ref: https://github.com/bhavaniravi/rasa-site-bot
 from decimal import Decimal
 from flask import Flask
 from flask import render_template,jsonify,request
 import requests
 import webbrowser
-# from models import *
 from engine import *
 import random
 
@@ -16,14 +14,7 @@ app.secret_key = '12345'
 def hello_world():
     return render_template('home.html')
 
-get_random_response = lambda intent:random.choice(intent_response_dict[intent])
-
-
-
-
-    
-
-
+ 
 
 @app.route('/choice',methods=["POST"])
 def userChoice():
@@ -60,7 +51,6 @@ def chat():
         entities = response.get("entities")
         topresponse = response["topScoringIntent"]
         intent = topresponse.get("intent")
-        #intent = "UI_entitlement"
         score = topresponse.get("score")
         if Decimal(score) < 0.50:
             print(" ^^^^^^^^^^^^ Low Confidence ^^^^^^^^^^^^",Decimal(score))        

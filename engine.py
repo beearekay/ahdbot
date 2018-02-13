@@ -40,42 +40,29 @@ intent_response_dict = {
     "Reference_WM_data_entitlement": "Please find the Link:www.entitlement.com/wm/Reference",
     "Transaction & Holdings_WM_data_entitlement": "Please find the Link:www.entitlement.com/WM/t&h",
     "MorningStar_WM_data_entitlement": "Please find the Link:www.entitlement.com/wm/morningstar",
-    "Entitlement_info":"EDPI uses janus entitlements to authorize user, Which one you look for?Options:Self Service#Data",
-    "Self Service_Entitlement_info":"For Individual Users accessing Self Service or EDPI UI, please raise EDPI Consumer entitlement",
-    "Data_Entitlement_info":"Raise the Janus data entitlement specific to data tower, Reference/Instrument/Funds etc.",
-    "UI_entitlement": "Which LOB?Options:AM#WM",
-    "AM_UI_entitlement":"Please raise EDPI COnsumer entitlement for AM in RMT Prod. Visit RMT",
-    "WM_UI_entitlement":"Please raise EDPI COnsumer entitlement for WM in RMT Prod. Visit RMT"
+    "entitlements_info":"EDPI uses janus entitlements to authorize user, Which one you look for?Options:Self Service#Data",
+    "Self Service_entitlements_info":"For Individual Users accessing Self Service or EDPI UI, please raise EDPI Consumer entitlement",
+    "Data_entitlements_info":"Raise the Janus data entitlement specific to data tower, Reference/Instrument/Funds etc.",
+    "ui_entitlement": "Which LOB?Options:AM#WM",
+    "AM_ui_entitlement":"Please raise EDPI COnsumer entitlement for AM in RMT Prod. Visit RMT",
+    "WM_ui_entitlement":"Please raise EDPI COnsumer entitlement for WM in RMT Prod. Visit RMT"
     
 }
 
 edpifaq_response_dict = {    
-    #"edpi_intro": "EDPI is an Enterprise Data Platform Interface. Once onboarded consumers can access AM/WM Data from predefined Data towers. Choose from below two options <br/><br/><html><body><form action=\"http://localhost:5000\" method=\"POST\"><div class=\"btn btn-info btn-lg\">AM EDPI</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class=\"btn btn-info btn-lg\">WM EDPI</div></form></body></html>",
-    #"edpi_intro": "EDPI is an Enterprise Data Platform Interface. Once onboarded consumers can access AM/WM Data from predefined Data towers. Choose one from below <br/><br/><html><body><form action=\"http://127.0.0.1:8080/result\" method=\"POST\"><input type=\"submit\" name=\"submit\" class=\"btn btn-info btn-lg active\" value=\"AM EDPI\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"submit\" class=\"btn btn-info btn-lg active\" value=\"WM EDPI\"> </form></body></html>",
     "edpi": "EDPI is an Enterprise Data Platform Interface. Once onboarded consumers can access AM/WM Data from predefined Data towers.",
     "benefits":"EDPI is a data distribution layer for AWM which acts as golden source",
     "faq_link":'You can check all the answers here AM EDPI: <a href=\"go/edpi\"</a>, WM EDPI:\"<a href=\"go/edpiwm\"</a>',
-    #"reference":"You want EDPI reference data ... visit Data model browser",
     "reference": "Which LOB?Options:AM#WM",
     "AM_reference": "Which Version do you want to see?Options:v0#v1#v2",
     "WM_reference": "Which Version do you want to see?Options:v3#v4#v5",
     "v0_AM_reference": "Please find the Link:www.google.com",
 }
 
-entitlements_info_response_dict = {
-    "entitlements_intro": "EDPI Needs two types of entitlements. One is for accessing the EDPI UI to onboard and build queries. Another type is to access the data using the built stored queries",
-    "me@edpi": "One Needs EDPI Consumer entitlements to onboard and build queries."
-}
 
 
 
-edpi_query_value_dict = {
-    "faq_link":'You can check all the answers here AM EDPI: <a href=\"go/edpi\", WM EDPI:\"<a href=\"go/edpiwm\"</a>'
-}
 
-def general_response(intent):
-    print(" ########## ",intent," ################")
-    return intent_response_dict[intent]
 
 def button_generator(buttons,append_text):
     button_template = []
@@ -128,10 +115,7 @@ get_random_response = lambda intent:random.choice(intent_response_dict[intent])
 
 def getBotResponse(intent,entities):
 
-    if intent == "entitlements_info":
-        print('OK inside entitlements_info')
-        response_text = entitlements_info(entities)
-    elif intent == "intro":
+    if intent == "intro":
         response_text = get_random_response(intent)
     elif intent == "greet":
         response_text = get_random_response(intent)
@@ -146,7 +130,6 @@ def getBotResponse(intent,entities):
         h_t=define_html_template(response_text,intent)
         response_text= hg.generateHTML(h_t)
     elif intent == "edpi_faq":
-        #response_text = gst_info(entities)# "Sorry will get answer soon" #get_event(entities["day"],entities["time"],entities["place"])
         print (intent)
         response_text = edpi_faq(entities)
         append_text=''
@@ -169,28 +152,7 @@ def edpi_faq(entities):
         return edpifaq_response_dict["edpi_intro"]
     if len(entities) == 1:
         print(" ************** ")
-        #print(entities[0].entity)
         ent = entities[0]
         return edpifaq_response_dict[ent["entity"]]
-        '''for ent in entities:
-            qtype = ent["type"]
-            qval = ent["entity"]
-            print(qtype)
-            print(qval)
-        if qtype == "tower":
-            return edpifaq_response_dict[qval]'''
     return "Sorry.." + edpifaq_response_dict["faq_link"]
 
-def entitlements_info(entities):
-    print("----------")
-    print(entities)
-    if len(entities) == 0:
-        return entitlements_info_response_dict["entitlements_intro"]
-    for ent in entities:
-        qtype = ent["type"]
-        qval = ent["entity"]
-        print(qtype)
-        print(qval)
-        if qtype == "edpi_ui":
-            return entitlements_info_response_dict[qval]
-    return "Sorry.." + edpifaq_response_dict["faq_link"]
