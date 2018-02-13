@@ -5,7 +5,7 @@ class HTMLGenerator:
         self.HEADERTEMPLATE = '<html><body>{}<form method="POST"><div> '
         self.FOOTER = '</div></form></body></html>'
         self.BUTTONTEMPLATE = '<button type="button" name="submit" class="btn btn-info btn-1g active" value="{}" onclick="{}">{}</button>&nbsp;'
-        self.LINKTEMPLATE = '<a href="{}">{}</a>'
+        self.LINKTEMPLATE = '<a href="{}" target="_blank">{}</a>'
 
     def generateHTML(self,theResponse):
         finalResponse = self.HEADERTEMPLATE.format(theResponse.summaryText)
