@@ -32,7 +32,7 @@ def userChoice():
     entities = []
     e = {'entity':request.form["text"]}
     entities.append(e)
-    response_text = edpi_faq(entities)
+    response_text = intent_response_dict[request.form["text"]]
     h_t=define_html_template(response_text,request.form["text"])
     response_text= hg.generateHTML(h_t)
 
@@ -60,6 +60,7 @@ def chat():
         entities = response.get("entities")
         topresponse = response["topScoringIntent"]
         intent = topresponse.get("intent")
+        #intent = "UI_entitlement"
         score = topresponse.get("score")
         if Decimal(score) < 0.50:
             print(" ^^^^^^^^^^^^ Low Confidence ^^^^^^^^^^^^",Decimal(score))        

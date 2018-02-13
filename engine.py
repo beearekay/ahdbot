@@ -6,6 +6,17 @@ from HTMLGenerator import *
 hg = HTMLGenerator()
 
 ##dict of response for each type of intent
+
+
+
+
+
+
+
+
+
+
+
 intent_response_dict = {
     "intro": ["This is a EDPI FAQ bot. One stop-shop to all your EDPI related queries"],
     "greet":["Hey, how can i help you?","Hello,How can i help you?","Hi,How can i help you?"],
@@ -20,6 +31,22 @@ intent_response_dict = {
     "edpi_gql": "Stored queries are defined in a format based on <a target='_blank' href='https://reactjs.org/blog/2015/05/01/graphql-introduction.html'>GraphQL.</a>. Stored queries are team specific and owned/managed by them ",
     "benefits": "EDPI is a data distribution layer for AWM which acts as golden source",
     "faq_link": "You can check all the answers here AM EDPI: <a target='_blank' href=\"go/edpi\"</a>, WM EDPI:\"<a target='_blank' href=\"go/edpiwm\"</a>",
+    "data_entitlement": "Which LOB?Options:AM#WM",
+    "AM_data_entitlement": "You need to have an EDPI parent Query Entitlement and also we have data sourced from below towers. Which tower are you interested in?Options:Reference#Securities & Pricing#Funds",
+    "WM_data_entitlement": "You need to have an EDPI parent Query Entitlement and also we have data sourced from below towers. Which tower are you interested in?Options:Reference#Transaction & Holdings#Morningstar",
+    "Reference_AM_data_entitlement": "Please find the Link:www.entitlement.com/am/Reference",
+    "Securities & Pricing_AM_data_entitlement": "Please find the Link:www.entitlement.com/am/s&p",
+    "Funds_AM_data_entitlement": "Please find the Link:www.entitlement.com/am/funds",
+    "Reference_WM_data_entitlement": "Please find the Link:www.entitlement.com/wm/Reference",
+    "Transaction & Holdings_WM_data_entitlement": "Please find the Link:www.entitlement.com/WM/t&h",
+    "MorningStar_WM_data_entitlement": "Please find the Link:www.entitlement.com/wm/morningstar",
+    "Entitlement_info":"EDPI uses janus entitlements to authorize user, Which one you look for?Options:Self Service#Data",
+    "Self Service_Entitlement_info":"For Individual Users accessing Self Service or EDPI UI, please raise EDPI Consumer entitlement",
+    "Data_Entitlement_info":"Raise the Janus data entitlement specific to data tower, Reference/Instrument/Funds etc.",
+    "UI_entitlement": "Which LOB?Options:AM#WM",
+    "AM_UI_entitlement":"Please raise EDPI COnsumer entitlement for AM in RMT Prod. Visit RMT",
+    "WM_UI_entitlement":"Please raise EDPI COnsumer entitlement for WM in RMT Prod. Visit RMT"
+    
 }
 
 edpifaq_response_dict = {    
@@ -116,6 +143,8 @@ def getBotResponse(intent,entities):
     elif intent in intent_response_dict:
         print ("is it working??")
         response_text=intent_response_dict[intent]
+        h_t=define_html_template(response_text,intent)
+        response_text= hg.generateHTML(h_t)
     elif intent == "edpi_faq":
         #response_text = gst_info(entities)# "Sorry will get answer soon" #get_event(entities["day"],entities["time"],entities["place"])
         print (intent)
