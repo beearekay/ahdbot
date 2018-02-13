@@ -100,18 +100,8 @@ def define_html_template(response_text,append_text):
 get_random_response = lambda intent:random.choice(intent_response_dict[intent])
 
 def getBotResponse(intent,entities):
-    if intent == "edpi_faq":
-        #response_text = gst_info(entities)# "Sorry will get answer soon" #get_event(entities["day"],entities["time"],entities["place"])
-        print (intent)
-        response_text = edpi_faq(entities)
-        append_text=''
-        if len(entities)>0:
-            ent=entities[0]
-            append_text=ent["entity"]
-        h_t=define_html_template(response_text,append_text)
-        response_text= hg.generateHTML(h_t)
 
-    elif intent == "entitlements_info":
+    if intent == "entitlements_info":
         print('OK inside entitlements_info')
         response_text = entitlements_info(entities)
     elif intent == "intro":
@@ -126,6 +116,17 @@ def getBotResponse(intent,entities):
     elif intent in intent_response_dict:
         print ("is it working??")
         response_text=intent_response_dict[intent]
+    elif intent == "edpi_faq":
+        #response_text = gst_info(entities)# "Sorry will get answer soon" #get_event(entities["day"],entities["time"],entities["place"])
+        print (intent)
+        response_text = edpi_faq(entities)
+        append_text=''
+        if len(entities)>0:
+            ent=entities[0]
+            append_text=ent["entity"]
+        h_t=define_html_template(response_text,append_text)
+        response_text= hg.generateHTML(h_t)
+
     else:
         response_text = "Sorry I am not trained to do that yet..." 
 
