@@ -21,6 +21,20 @@ Message = function (arg) {
     return this;
 };
 
+function sendToServer(selectedValue)
+{
+	$.post("/choice",
+	{text:selectedValue},
+	function(jsondata, status){
+                if(jsondata["status"]=="success"){
+                    response=jsondata["response"];
+
+                    if(response){showBotMessage(response);}
+                }
+            }
+	);
+}
+
 
 function showBotMessage(msg){
         message = new Message({

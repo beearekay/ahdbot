@@ -7,7 +7,8 @@ import webbrowser
 # from models import *
 from engine import *
 import random
-
+from html_template import *
+from HTMLGenerator import *
 
 app = Flask(__name__)
 app.secret_key = '12345'
@@ -17,6 +18,21 @@ def hello_world():
     return render_template('home.html')
 
 get_random_response = lambda intent:random.choice(intent_response_dict[intent])
+
+
+
+@app.route('/choice',methods=["POST"])
+def userChoice():
+    print("in user choices")
+    print(request.form["text"])
+    entities = []
+    e = {'entity':request.form["text"]}
+    entities.append(e)
+    response_text = edpi_faq(entities)
+
+    entities=response_text.split("#")
+    return jsonify({"status":"success","response":response_text})
+
 
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
@@ -30,7 +46,9 @@ def result():
 
 @app.route('/chat',methods=['POST','GET'])
 def chat():
-    try:       
+    hg = HTMLGenerator()
+
+    try:
         user_message = request.form["text"]
         response = requests.get("http://localhost:5000/parse",params={"q":user_message})
         response = response.json()
@@ -45,7 +63,35 @@ def chat():
         print("Intent {}, Entities {}".format(intent,entities))
         
         if intent == "edpi_faq":
+            #response_text = gst_info(entities)# "Sorry will get answer soon" #get_event(entities["day"],entities["time"],entities["place"])
+            print (intent)
             response_text = edpi_faq(entities)
+            a=response_text.find("Options")
+	        #print("a"+str(response_text.find("Options")))
+            text=response_text[1:a]
+            button_text=response_text[a+8:len(response_text)]
+            print("text"+str(text))
+            buttons=button_text.split("#")
+            print (buttons)
+            h_t=Response()
+            print (str(h_t))
+            h_t.summaryText = text
+            h_t.submitAction = "javascript:sendToServer(value)"
+            button_template = []
+
+            for b in buttons:
+                entry = Entry(ResponseType.BUTTON,b +"_reference",b)
+                #entry.linkText = b
+                #entry.type = ResponseType.BUTTON
+                #entry.text = b +"_reference"
+                button_template.append(entry)
+            print (str(button_template))
+            h_t.entries = button_template
+
+            response_text= hg.generateHTML(h_t)
+
+        #elif intent == "edpi_faq":
+            #response_text = edpi_faq(entities)
         elif intent == "entitlements_info":
             print('OK inside entitlements_info')
             response_text = entitlements_info(entities)
