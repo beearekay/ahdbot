@@ -7,8 +7,7 @@ import webbrowser
 # from models import *
 from engine import *
 import random
-from html_template import *
-from HTMLGenerator import *
+
 
 app = Flask(__name__)
 app.secret_key = '12345'
@@ -21,6 +20,11 @@ get_random_response = lambda intent:random.choice(intent_response_dict[intent])
 
 
 
+
+    
+
+
+
 @app.route('/choice',methods=["POST"])
 def userChoice():
     print("in user choices")
@@ -28,9 +32,10 @@ def userChoice():
     entities = []
     e = {'entity':request.form["text"]}
     entities.append(e)
-    response_text = edpi_faq(entities)
+    response_text = intent_response_dict[request.form["text"]]
+    h_t=define_html_template(response_text,request.form["text"])
+    response_text= hg.generateHTML(h_t)
 
-    entities=response_text.split("#")
     return jsonify({"status":"success","response":response_text})
 
 
@@ -46,7 +51,6 @@ def result():
 
 @app.route('/chat',methods=['POST','GET'])
 def chat():
-    hg = HTMLGenerator()
 
     try:
         user_message = request.form["text"]
@@ -56,55 +60,15 @@ def chat():
         entities = response.get("entities")
         topresponse = response["topScoringIntent"]
         intent = topresponse.get("intent")
+        #intent = "UI_entitlement"
         score = topresponse.get("score")
         if Decimal(score) < 0.50:
             print(" ^^^^^^^^^^^^ Low Confidence ^^^^^^^^^^^^",Decimal(score))        
         print(response)        
         print("Intent {}, Entities {}".format(intent,entities))
+        response_text=getBotResponse(intent,entities)
         
-        if intent == "edpi_faq":
-            #response_text = gst_info(entities)# "Sorry will get answer soon" #get_event(entities["day"],entities["time"],entities["place"])
-            print (intent)
-            response_text = edpi_faq(entities)
-            a=response_text.find("Options")
-	        #print("a"+str(response_text.find("Options")))
-            text=response_text[1:a]
-            button_text=response_text[a+8:len(response_text)]
-            print("text"+str(text))
-            buttons=button_text.split("#")
-            print (buttons)
-            h_t=Response()
-            print (str(h_t))
-            h_t.summaryText = text
-            h_t.submitAction = "javascript:sendToServer(value)"
-            button_template = []
-
-            for b in buttons:
-                entry = Entry(ResponseType.BUTTON,b +"_reference",b)
-                #entry.linkText = b
-                #entry.type = ResponseType.BUTTON
-                #entry.text = b +"_reference"
-                button_template.append(entry)
-            print (str(button_template))
-            h_t.entries = button_template
-
-            response_text= hg.generateHTML(h_t)
-
-        #elif intent == "edpi_faq":
-            #response_text = edpi_faq(entities)
-        elif intent == "entitlements_info":
-            print('OK inside entitlements_info')
-            response_text = entitlements_info(entities)
-        elif intent == "intro":
-            response_text = get_random_response(intent)
-        elif intent == "greet":
-            response_text = get_random_response(intent)
-        elif intent == "goodbye":
-            response_text = get_random_response(intent)
-        elif intent == "affirm":
-            response_text = get_random_response(intent)
-        else:
-            response_text = "Sorry I am not trained to do that yet..."
+        print("response_text"+str(response_text))
 
         return jsonify({"status":"success","response":response_text})
     except Exception as e:
