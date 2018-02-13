@@ -24,9 +24,9 @@ intent_response_dict = {
     "affirm":["Cool","I know you would like it"],
     "edpi_intro": "<html><body>EDPI is an Enterprise Data Platform Interface. Once onboarded consumers can access AM/WM Data from predefined Data towers. Choose one from below <br/><input type=\"button\" name=\"submit\" class=\"btn btn-info btn-lg active\" value=\"AM EDPI\" onclick=\"javascript:window.open('http://edpiamui')\">&nbsp;<input type=\"button\" name=\"submit\" class=\"btn btn-info btn-lg active\" value=\"WM EDPI\" onclick=\"javascript:window.open('http://edpiwmui')\"> </form></body></html>",
     "edpi_faq": "EDPI is an Enterprise Data Platform Interface. Once onboarded consumers can access AM/WM Data from predefined Data towers.",
-    "edpi_offer": "EDPI Offers below feautures. <br>Metadata Driven Interface.<br>Single point of Control<br>High Performance<br>Business Definition Link<br>Robus and Scalable<br>Cross Domain queries",
+    "edpi_offer": "EDPI Offers below feautures. <br>Metadata Driven Interface.<br>Single point of Control<br>High Performance<br>Business Definition link<br>Robus and Scalable<br>Cross Domain queries",
     "onboard_edpi": "You need to have Janus entitlements to onboard application and create queries. More details <a target='_blank' href='http://edpihelppage'>here</a>",
-    "edpi_consume": "EDPI allows you to construct GraphQL from its UI and expose the same as a rest Endpoint which streams out the data ",
+    "edpi_consume": "EDPI allows you to construct GraphQL from its UI and expose the same as a rest endpoint which streams out the data ",
     "create_query": "Click on the me@edpi on the top menu. Click on Build queries, and write GraphQL",
     "edpi_gql": "Stored queries are defined in a format based on <a target='_blank' href='https://reactjs.org/blog/2015/05/01/graphql-introduction.html'>GraphQL.</a>. Stored queries are team specific and owned/managed by them ",
     "benefits": "EDPI is a data distribution layer for AWM which acts as golden source",
@@ -39,13 +39,13 @@ intent_response_dict = {
     "Funds_AM_data_entitlement": "Please find the Link:www.entitlement.com/am/funds",
     "Reference_WM_data_entitlement": "Please find the Link:www.entitlement.com/wm/Reference",
     "Transaction & Holdings_WM_data_entitlement": "Please find the Link:www.entitlement.com/WM/t&h",
-    "MorningStar_WM_data_entitlement": "Please find the Link:www.entitlement.com/wm/morningstar",
+    "Morningstar_WM_data_entitlement": "Please find the Link:www.entitlement.com/wm/morningstar",
     "entitlements_info":"EDPI uses janus entitlements to authorize user, Which one you look for?Options:Self Service#Data",
     "Self Service_entitlements_info":"For Individual Users accessing Self Service or EDPI UI, please raise EDPI Consumer entitlement",
     "Data_entitlements_info":"Raise the Janus data entitlement specific to data tower, Reference/Instrument/Funds etc.",
     "ui_entitlement": "Which LOB?Options:AM#WM",
-    "AM_ui_entitlement":"Please raise EDPI COnsumer entitlement for AM in RMT Prod. Visit RMT",
-    "WM_ui_entitlement":"Please raise EDPI COnsumer entitlement for WM in RMT Prod. Visit RMT"
+    "AM_ui_entitlement":"Please raise EDPI Consumer entitlement for AM in RMT Prod. Visit Link:http://RMT",
+    "WM_ui_entitlement":"Please raise EDPI Consumer entitlement for WM in RMT Prod. Visit Link:http://RMT,RMT"
     
 }
 
@@ -75,7 +75,11 @@ def button_generator(buttons,append_text):
 def link_generator(links):
     link_template=[]
     for l in links:
-        entry = Entry(ResponseType.LINK,l,l)
+        link_link_text=l.split(',')
+        if(len(link_link_text)>1):
+            entry = Entry(ResponseType.LINK,link_link_text[0],link_link_text[1])
+        else:
+            entry = Entry(ResponseType.LINK,link_link_text[0],link_link_text[0])
         link_template.append(entry)
     return link_template
 
@@ -125,7 +129,6 @@ def getBotResponse(intent,entities):
     elif intent == "affirm":
         response_text = get_random_response(intent)
     elif intent in intent_response_dict:
-        print ("is it working??")
         response_text=intent_response_dict[intent]
         h_t=define_html_template(response_text,intent)
         response_text= hg.generateHTML(h_t)
