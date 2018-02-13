@@ -27,14 +27,14 @@
         "entities": []
       },
       {
-        "text": "what is edpi",
+        "text": "what is data platform",
         "intent": "edpi_faq",
         "entities": [
           {
-            "end": 12,
-            "entity": "what_edpi",
-            "start": 8,
-            "value": "edpi"
+            "start": 13,
+            "end": 21,
+            "value": "platform",
+            "entity": "enterprise_data_platform_inteface"
           }
         ]
       },
@@ -66,7 +66,7 @@
         "entities": []
       },
       {
-        "text": "What entitlements I need to access edpi",
+        "text": "what entitlements I need to access edpi",
         "intent": "entitlements_info",
         "entities": []
       },
@@ -94,18 +94,6 @@
         "text": "end",
         "intent": "goodbye",
         "entities": []
-      },
-      {
-        "text": "how can I create a query in edpi",
-        "intent": "edpi_query",
-        "entities": [
-          {
-            "start": 19,
-            "end": 24,
-            "value": "query",
-            "entity": "create_query"
-          }
-        ]
       },
       {
         "text": "how can I get access to edpi ui",
@@ -278,14 +266,14 @@
         ]
       },
       {
-        "text": "what is edpi?",
+        "text": "what is data platform?",
         "intent": "edpi_faq",
         "entities": [
           {
-            "end": 12,
-            "entity": "what_edpi",
-            "start": 8,
-            "value": "edpi"
+            "start": 13,
+            "end": 21,
+            "value": "platform",
+            "entity": "enterprise_data_platform_inteface"
           }
         ]
       },
@@ -490,18 +478,6 @@
             "entity": "what_gql",
             "start": 8,
             "value": "graphql"
-          }
-        ]
-      },
-      {
-        "text": "how can I create a query in edpi?",
-        "intent": "edpi_query",
-        "entities": [
-          {
-            "start": 19,
-            "end": 24,
-            "value": "query",
-            "entity": "create_query"
           }
         ]
       }
