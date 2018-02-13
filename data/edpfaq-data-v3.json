@@ -39,6 +39,11 @@
         ]
       },
       {
+        "text": "how can I on board into edpi?",
+        "intent": "edpi_onboard",
+        "entities": []
+      },
+      {
         "text": "what services edpi offer?",
         "intent": "edpi_offer",
         "entities": [
@@ -306,10 +311,10 @@
         "intent": "edpi_offer",
         "entities": [
           {
+            "end": 15,
+            "entity": "offer_edpi",
             "start": 10,
-            "end": 16,
-            "value": "offers",
-            "entity": "offer_edpi"
+            "value": "offer"
           }
         ]
       },
@@ -318,10 +323,10 @@
         "intent": "edpi_offer",
         "entities": [
           {
+            "end": 15,
+            "entity": "offer_edpi",
             "start": 10,
-            "end": 16,
-            "value": "offers",
-            "entity": "offer_edpi"
+            "value": "offer"
           }
         ]
       },
@@ -378,10 +383,10 @@
         "intent": "edpi_offer",
         "entities": [
           {
+            "end": 12,
+            "entity": "offer_edpi",
             "start": 5,
-            "end": 13,
-            "value": "features",
-            "entity": "offer_edpi"
+            "value": "feature"
           }
         ]
       },
@@ -390,10 +395,10 @@
         "intent": "edpi_offer",
         "entities": [
           {
+            "end": 12,
+            "entity": "offer_edpi",
             "start": 5,
-            "end": 13,
-            "value": "features",
-            "entity": "offer_edpi"
+            "value": "feature"
           }
         ]
       },
